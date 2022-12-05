@@ -4,7 +4,10 @@
 
 ## Quick project overview
 
-TODO: add links to gist for live demos ...
+### Live demos
+
+- [Fixed size table](https://bl.ocks.org/pete88b/a2044cf563b5e92f63ca800b108e7893)
+    - HTML editable table with export to JSON
 
 TODO: explain why we have a python app as well ...
 
