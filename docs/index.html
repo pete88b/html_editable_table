@@ -31,52 +31,49 @@ nb_path: "index.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Quick-project-overview">Quick project overview<a class="anchor-link" href="#Quick-project-overview"> </a></h2><h3 id="Live-demos">Live demos<a class="anchor-link" href="#Live-demos"> </a></h3><ul>
+<h1 id="Quick-project-overview">Quick project overview<a class="anchor-link" href="#Quick-project-overview"> </a></h1><p>This is a work in progress but for now ...</p>
+<p>This project contains lots of plain HTML, CSS and JavaScript examples of how we can work with editable HTML tables. 
+We also have a <a href="https://fastapi.tiangolo.com/">FastAPI</a> app</p>
+<ul>
+<li>to make it easy to serve the static examples locally</li>
+<li>show how we can make calls to a back-end API</li>
+</ul>
+<h2 id="Live-demos">Live demos<a class="anchor-link" href="#Live-demos"> </a></h2><ul>
 <li><a href="https://bl.ocks.org/pete88b/a2044cf563b5e92f63ca800b108e7893">Fixed size table</a><ul>
 <li>HTML editable table with export to JSON</li>
 </ul>
 </li>
 </ul>
-<p>TODO: explain why we have a python app as well ...</p>
-<ul>
-<li><code>10_main.ipynb</code><ul>
-<li>TODO</li>
-</ul>
-</li>
-<li><code>00_core.ipynb</code><ul>
-<li>TODO</li>
-</ul>
-</li>
-</ul>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Running-locally">Running locally<a class="anchor-link" href="#Running-locally"> </a></h1><p>Note: See conda setup below</p>
-<p>The easiest way to get started is to run the app from the command line.</p>
+<h1 id="Running-locally">Running locally<a class="anchor-link" href="#Running-locally"> </a></h1><h2 id="Install-anaconda">Install anaconda<a class="anchor-link" href="#Install-anaconda"> </a></h2><p><a href="https://docs.conda.io/en/latest/miniconda.html">miniconda</a> is great (o:</p>
+<h2 id="Clone-from-github">Clone from github<a class="anchor-link" href="#Clone-from-github"> </a></h2><p>change directory to where you would like the repo to live on your machine</p>
+<pre><code>git clone https://github.com/pete88b/html_editable_table.git
+</code></pre>
+<h2 id="Create-the-conda-environment">Create the conda environment<a class="anchor-link" href="#Create-the-conda-environment"> </a></h2><pre><code>cd html_editable_table
+conda env create -f environment.yaml
+</code></pre>
+<h2 id="Start-the-FastAPI-test-server">Start the FastAPI test server<a class="anchor-link" href="#Start-the-FastAPI-test-server"> </a></h2><p>windows</p>
 <pre><code>SET X_API_KEYS=['test']
-conda activate html_editable_table
-cd devopsgit\html_editable_table
 uvicorn app:app --reload
 </code></pre>
-<p>Hit <a href="http://127.0.0.1:8000/docs">the docs page</a> and try it out</p>
+<p>linux</p>
+<pre><code>export X_API_KEYS=['test']
+uvicorn app:app --reload
+</code></pre>
+<h2 id="Then-...">Then ...<a class="anchor-link" href="#Then-..."> </a></h2><p>Hit <a href="http://127.0.0.1:8000/static/index.html">the index page</a> and try it out. Feel free to edit the project files- FastAPI reloads pretty fast so you should just need to reload your browser to see changes.</p>
+<p>Note: API docs are available at <a href="http://127.0.0.1:8000/docs">the docs page</a></p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Deployment">Deployment<a class="anchor-link" href="#Deployment"> </a></h1><p>TODO: explain how to deploy to python anywhere</p>
-<p>See <a href="https://fastapi.tiangolo.com/deployment/server-workers/">https://fastapi.tiangolo.com/deployment/server-workers/</a> if you're interested in startup command options.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Developers">Developers<a class="anchor-link" href="#Developers"> </a></h1><h2 id="Conda-set-up">Conda set-up<a class="anchor-link" href="#Conda-set-up"> </a></h2><p><code>conda env create -f environment.yaml</code></p>
+<h1 id="The-python-app">The python app<a class="anchor-link" href="#The-python-app"> </a></h1><p>I use nbdev for all of my python projects (this one uses <a href="https://nbdev1.fast.ai/tutorial.html">nbdev1</a>) but ... because the python part is so simple, I'm wondering if we won't see much benefit from using nbdev?</p>
 
 </div>
 </div>

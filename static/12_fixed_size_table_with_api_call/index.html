@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>HTML editable table</title>
+   <link href="app.css" rel="stylesheet">
+</head>
+<body>
+   <p>
+      An HTML table that;
+      <ul>
+         <li>allows column names and cell values to be edited in place</li>
+         <li>supports export of data to JSON</li>
+      </ul>
+      We use the export of data function to
+      <ul>
+         <li>POSTs the data to '/process-data/' - that converts all text to upper case</li>
+         <ul>
+            <li>See: <a href="../../docs#/default/_process_data_process_data__post" target="_blank">API docs</a></li>
+         </ul>
+         <li>then displays the data returned by the API</li>
+      </ul>
+   </p>
+
+   <div class="section" >
+      <h2>Table</h2>
+      <table id="table">
+         <thead>
+            <tr>
+               <th contenteditable="true">Column A</th>
+               <th contenteditable="true">Column B<br></th>
+               <th contenteditable="true">Column C<br></th>
+               <th contenteditable="true"></th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td contenteditable="true">a1</td>
+               <td contenteditable="true">b1<br></td>
+               <td contenteditable="true">c1</td>
+               <td contenteditable="true"></td>
+            </tr>
+            <tr>
+               <td contenteditable="true">a2</td>
+               <td contenteditable="true">b2</td>
+               <td contenteditable="true">c2</td>
+               <td contenteditable="true"></td>
+            </tr>
+            <tr>
+               <td contenteditable="true">a3</td>
+               <td contenteditable="true">b3</td>
+               <td contenteditable="true">c3</td>
+               <td contenteditable="true"></td>
+            </tr>
+            <tr>
+               <td contenteditable="true"></td>
+               <td contenteditable="true"></td>
+               <td contenteditable="true"></td>
+               <td contenteditable="true"></td>
+            </tr>
+         </tbody>
+      </table>
+      
+   </div>
+
+   <div class="section">
+      <h2>Output Data <input type="submit" value="Click to refresh ..." id="run"></h2>
+      <table id="output_data"></table>
+   </div>
+
+   <div id="loading-overlay">
+      <div class="loading-icon"></div>
+   </div>
+   
+<script src="app.js"></script>
+</body>
+</html>

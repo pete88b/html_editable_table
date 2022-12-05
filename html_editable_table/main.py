@@ -6,6 +6,7 @@ __all__ = ['get_valid_api_keys', 'api_key_check', 'create_app']
 from fastapi import FastAPI, Header, HTTPException
 from fastapi.staticfiles import StaticFiles
 from typing import List, Dict
+import pandas as pd
 
 # Cell
 def get_valid_api_keys():
@@ -25,19 +26,26 @@ def create_app():
     app.mount('/static', StaticFiles(directory='static'), name='static')
 
     @app.get('/api-key-check')
-    def _api_key_check(x_api_key: str = Header(None)):
+    def _api_key_check(x_api_key: str=Header(None)):
         "Validates the `x-api-key` header parameter"
         api_key_check(x_api_key)
         return {'x-api-key': x_api_key, 'result': 'OK'}
 
-    @app.options('/translate/')
-    def _translate_options(x_api_key: str = Header(None)):
+    @app.options('/process-data/')
+    def _process_data_options(x_api_key: str=Header(None)):
         "Validate endpoint before invoking the actual POST method"
         api_key_check(x_api_key)
 
-    @app.post('/translate/', response_model=Dict[str, str])
-    def _translate(payload: dict, x_api_key: str = Header(None)):
-        "TODO"
+    @app.post('/process-data/', response_model=List[Dict[str, str]])
+    def _process_data(payload: List[Dict[str, str]], x_api_key: str=Header(None)):
+        "Demo data processing that just upper cases all values"
         api_key_check(x_api_key)
+        print(payload)
+        df = pd.DataFrame(payload)
+        for col in df.columns:
+            df[col] = df[col].str.upper()
+        result = df.to_dict(orient='records')
+        print('result', result, type(result))
+        return result
 
     return app
