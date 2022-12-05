@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>HTML5 editable table</title>
+   <link href="app.css" rel="stylesheet">
+</head>
+<body>
+   <h1>HTML5 editable table</h1>
+
+   <p>
+      An HTML table that;
+      <ul>
+         <li>can be created from JSON</li>
+         <li>allows column names and cell values to be edited in place</li>
+         <li>allows new columns and rows to be added</li>
+         <li>supports export of data to JSON</li>
+         <li>allows columns and rows to be excluded from export, without being deleted from the table</li>
+      </ul>
+   </p>
+
+   <div class="section" >
+      <h2>Table</h2>
+      <p><a href="#" id="jsonToTable">Re-build table using JSON data</a></p>
+      <table id="table"></table>
+   </div>
+
+   <div class="section">
+      <h2>JSON</h2>
+      <p><a href="#" id="tableToJson">Extract table data to JSON</a></p>
+      <textarea id="json"></textarea>
+   </div>
+   
+<script src="app.js"></script>
+</body>
+</html>
