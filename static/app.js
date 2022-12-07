@@ -11,7 +11,7 @@ const data = {
 function displayData(data) {
 	const dataContainer = document.getElementById('data-container');
     const searchPubMedTitle = 'Search PubMed for this term (select some text to search for part of the term)';
-	var innerHTML = '';
+	let innerHTML = '';
 	data.translations.forEach((element, index) => {
 		const translation = element[element.length - 1];
 		// TODO: trim header text to max length - see: patient has really bad headaches with visual disturbance (wild hallucinations sometimes) and at least 2 extra toes
@@ -102,8 +102,8 @@ function translate() {
             // TODO: check HTTP status
             response = JSON.parse(xhr.responseText);
             data.translations.forEach((element, index) => {
-				var translationHistory = element; // DRY - this is target text changed
-				var translation = JSON.parse(JSON.stringify(translationHistory[translationHistory.length - 1]));
+				let translationHistory = element; // DRY - this is target text changed
+				let translation = JSON.parse(JSON.stringify(translationHistory[translationHistory.length - 1]));
 				new_target_text = response[translation.source_text];
 				if (new_target_text !== undefined && new_target_text != translation.target_text) {
 					translation.translation_status = 'Not Confirmed';
@@ -129,12 +129,12 @@ document.getElementById('translate').onclick = translate;
 
 function translationHeaderClick(index) {
 	$(`#translation-header-${index}`).toggleClass("open");
-	var content = $(`#translation-content-${index}`);
+	let content = $(`#translation-content-${index}`);
 	content.toggle(200)
 }
 
 function searchPubMed(what, index) {
-	var e = document.getElementById(`${what}-textarea-${index}`);
+	let e = document.getElementById(`${what}-textarea-${index}`);
 	searchText = e.value.substring(e.selectionStart, e.selectionEnd);
 	if (!!!searchText) {
 		searchText = e.value;
@@ -145,7 +145,7 @@ function searchPubMed(what, index) {
 }
 
 function searchWikipedia(what, index) { // TODO: DRY
-	var e = document.getElementById(`${what}-textarea-${index}`);
+	let e = document.getElementById(`${what}-textarea-${index}`);
 	searchText = e.value.substring(e.selectionStart, e.selectionEnd);
 	if (!!!searchText) {
 		searchText = e.value;
@@ -167,8 +167,8 @@ function toggleTranslationStatus(index) {
 	link = document.getElementById(`translation-status-link-${index}`);
 	link.innerHTML = 'Confirmed' == link.innerHTML ? 'Not Confirmed' : 'Confirmed';
 	link.title = getToggleTranslationStatusTitle(link.innerHTML);
-	var translationHistory = data.translations[index];
-	var translation = JSON.parse(JSON.stringify(translationHistory[translationHistory.length - 1]));
+	let translationHistory = data.translations[index];
+	let translation = JSON.parse(JSON.stringify(translationHistory[translationHistory.length - 1]));
 	translation.translation_status = link.innerHTML;
 	translation.action_type = 'status updated by user';
 	translation.action_date = new Date().toISOString();
@@ -180,8 +180,8 @@ function sourceTextChanged(index) {
 	link = document.getElementById(`translation-status-link-${index}`);
 	link.innerHTML = 'Not Confirmed';
 	link.title = getToggleTranslationStatusTitle(link.innerHTML);
-	var translationHistory = data.translations[index];
-	var translation = JSON.parse(JSON.stringify(translationHistory[translationHistory.length - 1]));
+	let translationHistory = data.translations[index];
+	let translation = JSON.parse(JSON.stringify(translationHistory[translationHistory.length - 1]));
 	translation.translation_status = link.innerHTML;
 	translation.source_text = document.getElementById(`source-textarea-${index}`).value;
 	translation.target_text = '';
@@ -195,8 +195,8 @@ function targetTextChanged(index) {
 	link = document.getElementById(`translation-status-link-${index}`);
 	link.innerHTML = 'Not Confirmed';
 	link.title = getToggleTranslationStatusTitle(link.innerHTML);
-	var translationHistory = data.translations[index];
-	var translation = JSON.parse(JSON.stringify(translationHistory[translationHistory.length - 1]));
+	let translationHistory = data.translations[index];
+	let translation = JSON.parse(JSON.stringify(translationHistory[translationHistory.length - 1]));
 	translation.translation_status = link.innerHTML;
 	translation.target_text = document.getElementById(`target-textarea-${index}`).value;
 	translation.action_type = 'target text updated by user';

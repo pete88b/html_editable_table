@@ -112,7 +112,7 @@ function createTable(tableElementId, tableData) {
     table.makeNewRow = () => makeNewRow(table);
     table.makeNewColumnAndRow = () => makeNewColumnAndRow(table);
     // remove existing table content 
-    var child = table.lastElementChild;
+    let child = table.lastElementChild;
     while (child) {
         table.removeChild(child);
         child = table.lastElementChild;
@@ -120,9 +120,9 @@ function createTable(tableElementId, tableData) {
     // populate table content
     const thead = document.createElement('thead');
     table.append(thead);
-    var tr = document.createElement('tr');
+    let tr = document.createElement('tr');
     thead.append(tr);
-    var row = tableData[0];
+    let row = tableData[0];
     const columnNames = Object.keys(row);
     columnNames.push('');
     columnNames.forEach(columnName => {
@@ -150,7 +150,7 @@ const jsonElement = document.getElementById('json');
 jsonElement.value = JSON.stringify(demoData).replaceAll('},{', '},\n{');
 const tableToJson = document.getElementById('tableToJson');
 tableToJson.onclick = function(event) {
-    var data = extractTableData('table');
+    let data = extractTableData('table');
     console.log(data);
     jsonElement.value = JSON.stringify(data).replaceAll('},{', '},\n{');
 };
@@ -192,8 +192,8 @@ function extractTableData(tableElementId) {
 }
 
 function displayOutputData(data) {
-    var innerHTML = '<thead><tr>';
-    var columns = [];
+    let innerHTML = '<thead><tr>';
+    let columns = [];
     for (const col in data) {
         columns.push(col);
         innerHTML += `
@@ -230,11 +230,11 @@ function run() {
 	xhr.setRequestHeader("Content-Type", "application/json");
 	xhr.setRequestHeader('x-api-key', 'test');
     //xxx
-    var table = document.getElementById('rule_args_data');
-    var tbody = table.getElementsByTagName('tbody')[0];
-    var ruleArgs = [];
+    let table = document.getElementById('rule_args_data');
+    let tbody = table.getElementsByTagName('tbody')[0];
+    let ruleArgs = [];
     Array.from(tbody.getElementsByTagName('tr')).forEach((tr, rowIndex) => {
-        var tds = Array.from(tr.getElementsByTagName('td'));
+        let tds = Array.from(tr.getElementsByTagName('td'));
         ruleArgs.push([tds[0].textContent, tds[1].textContent]);
     });
     xhr.send(JSON.stringify({
@@ -245,10 +245,10 @@ function run() {
 }
 
 function addRow(tableElementId) {
-    var table = document.getElementById(tableElementId);
-    var tbody = table.getElementsByTagName('tbody')[0];
-    var tr = document.createElement('tr');
-    var column_count = Array.from(table.getElementsByTagName('th')).length;
+    let table = document.getElementById(tableElementId);
+    let tbody = table.getElementsByTagName('tbody')[0];
+    let tr = document.createElement('tr');
+    let column_count = Array.from(table.getElementsByTagName('th')).length;
     for (let i = 0; i < column_count - 1; i++) {
         td = document.createElement('td');
         td.contentEditable = "true"; // TODO: all except the last one
@@ -256,7 +256,7 @@ function addRow(tableElementId) {
     }
     td = document.createElement('td');
 
-    var a = document.createElement('a');
+    let a = document.createElement('a');
     a.setAttribute('href', '#');
     a.appendChild(document.createTextNode('Delete this row'));
     td.appendChild(a);
@@ -268,7 +268,7 @@ function addRow(tableElementId) {
 
 
 function dTable(tableElementId) {
-    var table = document.getElementById(tableElementId);
+    let table = document.getElementById(tableElementId);
 
     // Array.from(table.getElementsByTagName('tr')).forEach((tr, i) => {
     //     const cell = document.createElement(i ? "td" : "th");
@@ -276,11 +276,11 @@ function dTable(tableElementId) {
     //     tr.appendChild(cell);
     // });
     function th_input(event) {
-        var data = {};
-        var columnPositionToName = [];
-        var table = document.getElementById(tableElementId);
-        var tbody = table.getElementsByTagName('tbody')[0];
-        var innerHTML = `CleanStr([`;
+        let data = {};
+        let columnPositionToName = [];
+        let table = document.getElementById(tableElementId);
+        let tbody = table.getElementsByTagName('tbody')[0];
+        let innerHTML = `CleanStr([`;
         Array.from(tbody.getElementsByTagName('tr')).forEach((tr, rowIndex) => {
             if (rowIndex > 0) {
                 innerHTML += ', ';
@@ -291,7 +291,7 @@ function dTable(tableElementId) {
         innerHTML += `])`;
         document.getElementById('generated_rule_args').innerHTML = innerHTML;
 
-        var innerHTML = `Running this step will;`;
+        innerHTML = `Running this step will;`;
         Array.from(tbody.getElementsByTagName('tr')).forEach((tr, rowIndex) => {
             tds = Array.from(tr.getElementsByTagName('td'));
             innerHTML += `\n- replace "${tds[0].textContent}" with "${tds[1].textContent}" `;                

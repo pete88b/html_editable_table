@@ -19,7 +19,7 @@ function extractTableData(tableElementId) {
 const jsonElement = document.getElementById('json');
 const tableToJson = document.getElementById('tableToJson');
 tableToJson.onclick = function(event) {
-    var data = extractTableData('table');
+    let data = extractTableData('table');
     jsonElement.value = JSON.stringify(data).replaceAll('},{', '},\n{');
 };
 
@@ -59,8 +59,8 @@ function addKeyboardNavigation(tableElementId) {
             cell.onkeydown = (event) => {
                 if (event.ctrlKey && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
                     const cellPosition = getCellPosition(cell);
-                    var rowIdx = cellPosition[0];
-                    var columnIdx = cellPosition[1];
+                    let rowIdx = cellPosition[0];
+                    let columnIdx = cellPosition[1];
                     if (event.key == 'ArrowLeft') {
                         columnIdx--;
                     } else if (event.key == 'ArrowRight') {

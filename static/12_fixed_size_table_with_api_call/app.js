@@ -17,7 +17,7 @@ function extractTableData(tableElementId) {
 }
 
 function displayOutputData(data) {
-    var innerHTML = '<thead><tr>';
+    let innerHTML = '<thead><tr>';
     for (const col in data[0]) { // use the 1st row to get columns names
         innerHTML += `<th>${col}</th>`;
     }

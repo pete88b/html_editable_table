@@ -10,11 +10,20 @@
       An HTML table that;
       <ul>
          <li>allows column names and cell values to be edited in place</li>
-         <li>allows new columns and rows to be added</li>
+         <li>allows rows and columns to be hidden</li>
          <ul>
-            <li>enteri data in the last row/column to create new rows/columns</li>
+            <li>hide columns with <code>Alt + &uarr; &darr; </code></li>
+            <li>hide rows with <code>Alt + &rarr; &larr;</code></li>
+            <li>maybe hidden isn't the right term because you can still see hidden rows and columns</li>
+            <li>
+               the idea is that you might want to exclude some data from the JSON export but be able to quickly get the data back - 
+               so we don't want to delete the data from the table and make people re-enter it
+            </li>
          </ul>
          <li>supports export of data to JSON</li>
+         <ul>
+            <li>hidden rows and columns are not included in this export</li>
+         </ul>
       </ul>
    </p>
 
@@ -56,14 +65,12 @@
             </tr>
          </tbody>
       </table>
+      
    </div>
 
    <div class="section">
       <h2>JSON</h2>
-      <p>
-         <a href="#" id="tableToJson">Extract table data to JSON</a>
-         Note: The last empty row/column is not included in the export.
-      </p>
+      <p><a href="#" id="tableToJson">Extract table data to JSON</a></p>
       <textarea id="json"></textarea>
    </div>
    

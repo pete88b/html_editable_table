@@ -89,7 +89,7 @@ initTable('table');
 const jsonElement = document.getElementById('json');
 const tableToJson = document.getElementById('tableToJson');
 tableToJson.onclick = function(event) {
-    var data = extractTableData('table');
+    let data = extractTableData('table');
     jsonElement.value = JSON.stringify(data).replaceAll('},{', '},\n{');
 };
 
