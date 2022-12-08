@@ -25,7 +25,7 @@ def api_key_check(x_api_key):
 # Cell
 def create_app():
     app = FastAPI()
-    app.mount('/static', StaticFiles(directory='static'), name='static')
+    app.mount('/docs', StaticFiles(directory='docs'), name='docs')
 
     @app.get('/api-key-check')
     def _api_key_check(x_api_key: str=Header(None)):

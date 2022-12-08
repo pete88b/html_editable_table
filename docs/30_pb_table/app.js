@@ -244,7 +244,7 @@ const demoData = [
     {col1:'A3', col2:'b3.3', col3:''}
 ];
 // constructor (tableElementId, canAddColumns=true, canAddRows=true, canEditColumnNames=true)
-const pbTable = new PbTable('table');
+const pbTable = new PbTable('table', canAddColumns=true, canAddRows=true, canEditColumnNames=true);
 pbTable.data = demoData;
 
 const jsonElement = document.getElementById('json');

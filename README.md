@@ -55,7 +55,7 @@ uvicorn app:app --reload
 
 ## Then ...
 
-Hit [the index page](http://127.0.0.1:8000/static/index.html) and try it out. Feel free to edit the project files- FastAPI reloads pretty fast so you should just need to reload your browser to see changes.
+Hit [the index page](http://127.0.0.1:8000/docs/index.html) and try it out. Feel free to edit the project files- FastAPI reloads pretty fast so you should just need to reload your browser to see changes.
 
 Note: API docs are available at [the docs page](http://127.0.0.1:8000/docs)
 
