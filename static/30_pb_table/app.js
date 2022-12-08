@@ -4,8 +4,6 @@
 - can add rows
 - can edit column names
 
-pbTable('tableId', {'canAddColumns':' true', 'canAddRows': true, 'canEditColumnNames': true})
-
 # so we always have
 - keyboard navigation
 - row hiding
@@ -34,18 +32,33 @@ class PbTable {
     }
 }
 
-PbTable.prototype.columnIndexOfCell = function (cell) { // th or td
-    const children = cell.parentElement.children;
-    for (let i = 0; i < children.length; i++) {
-        if (children[i] === cell) {
-            return i;
+PbTable.prototype.getCellPosition = function(cell) {
+    const trs = Array.from(this.table.getElementsByTagName('tr'));
+    for (let rowIdx = 0; rowIdx < trs.length; rowIdx++) {
+        const cells = Array.from(trs[rowIdx].children);
+        for (let columnIdx = 0; columnIdx < cells.length; columnIdx++) {
+            if (cell == cells[columnIdx]) {
+                return [rowIdx, columnIdx];
+            }
         }
     }
-    throw `failed to find cell in parents children ${cell}`
+    throw `failed to find cell in table ${cell}`
 }
 
-PbTable.prototype.toggleColumnHidden = function (cell) {
-    const columnIndex = this.columnIndexOfCell(cell);
+PbTable.prototype.getCellByPosition = function(rowIdx, columnIdx) {
+    if (rowIdx < 0 || columnIdx < 0) {
+        return;
+    }
+    const trs = Array.from(this.table.getElementsByTagName('tr'));
+    if (rowIdx >= trs.length) {
+        return;
+    }
+    const cells = Array.from(trs[rowIdx].children);
+    return cells[columnIdx];
+}
+
+PbTable.prototype.toggleColumnHidden = function(cell) {
+    const columnIndex = this.getCellPosition(cell)[1];
     const th = Array.from(this.table.getElementsByTagName('th'))[columnIndex];
     const hidden = th.classList.contains('hidden'); // use hidden state of column when adding new rows
     Array.from(this.table.getElementsByTagName('tr')).forEach(tr => {
@@ -58,8 +71,27 @@ PbTable.prototype.toggleColumnHidden = function (cell) {
     });
 }
 
-PbTable.prototype.onkeydownHandler = function (event) {
+PbTable.prototype.onkeydownHandler = function(event) {
     // nav
+    if (event.ctrlKey && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
+        const cellPosition = this.getCellPosition(event.target);
+        let rowIdx = cellPosition[0];
+        let columnIdx = cellPosition[1];
+        if (event.key == 'ArrowLeft') {
+            columnIdx--;
+        } else if (event.key == 'ArrowRight') {
+            columnIdx++;
+        } else if (event.key == 'ArrowUp') {
+            rowIdx--;
+        } else {
+            rowIdx++;
+        }
+        const cellToMoveTo = this.getCellByPosition(rowIdx, columnIdx);
+        if (cellToMoveTo) {
+            cellToMoveTo.focus();
+        }
+        event.preventDefault();
+    }
     // hide
     if (event.altKey && (event.key == 'ArrowLeft' || event.key == 'ArrowRight')) {
         if (event.target.tagName == 'TD') {
@@ -73,8 +105,7 @@ PbTable.prototype.onkeydownHandler = function (event) {
     }
 }
 
-
-PbTable.prototype.newTh = function (columnName) {
+PbTable.prototype.newTh = function(columnName) {
     const th = document.createElement('th');
     if (this.canEditColumnNames) {
         th.contentEditable = 'true';
@@ -84,15 +115,19 @@ PbTable.prototype.newTh = function (columnName) {
     return th;
 }
 
-PbTable.prototype.newTd = function (columnName, value) {
+PbTable.prototype.newTd = function(columnName, value) {
     const td = document.createElement('td');
     td.contentEditable = "true";
-    td.textContent = value;
+    // we would like to just td.textContent = value; but ... we don't see spaces unless
+    // we set innerHTML after replacing spaces with HTML entity
+    if (value) {
+        td.innerHTML = value.replaceAll(' ', '&nbsp;');
+    }
     td.onkeydown = this.onkeydownHandler;
     return td;
 }
 
-PbTable.prototype.makeNewColumn = function () {
+PbTable.prototype.makeNewColumn = function() {
     if (!this.canAddColumns) {
         return;
     }
@@ -108,7 +143,7 @@ PbTable.prototype.makeNewColumn = function () {
     this.resetNewColumnAndRowListeners();
 }
 
-PbTable.prototype.makeNewRow = function () {
+PbTable.prototype.makeNewRow = function() {
     if (!this.canAddRows) {
         return;
     }
@@ -122,12 +157,12 @@ PbTable.prototype.makeNewRow = function () {
     this.resetNewColumnAndRowListeners();
 }
 
-PbTable.prototype.makeNewColumnAndRow = function () {
+PbTable.prototype.makeNewColumnAndRow = function() {
     this.makeNewColumn();
     this.makeNewRow();
 }
 
-PbTable.prototype.resetNewColumnAndRowListeners = function () {
+PbTable.prototype.resetNewColumnAndRowListeners = function() {
     Array.from(this.table.getElementsByTagName('tr')).forEach((tr, trIdx, trArray) => {
         Array.from(tr.children).forEach((cell, tdIdx, tdArray) => {
             [this.makeNewColumn, this.makeNewRow, this.makeNewColumnAndRow].forEach(fn => cell.removeEventListener('input', fn));
@@ -144,7 +179,7 @@ PbTable.prototype.resetNewColumnAndRowListeners = function () {
     });
 }
 
-PbTable.prototype.setData = function (tableData) {
+PbTable.prototype.setData = function(tableData) {
     // remove existing table content 
     Array.from(this.table.children).forEach(child => this.table.removeChild(child));
     // populate table content
@@ -172,7 +207,7 @@ PbTable.prototype.setData = function (tableData) {
     this.makeNewRow();
 };
 
-PbTable.prototype.getData = function () {
+PbTable.prototype.getData = function() {
     const data = [];
     const columnPositionToName = [];
     const columnPositionToHidden = [];
@@ -204,12 +239,12 @@ PbTable.prototype.getData = function () {
 };
 
 const demoData = [
-    {col1:'a', col2:'bx'},
-    {col1:'a2', col2:'b2'},
-    {col1:'A3', col2:'b3.3'}
+    {col1:'a1', col2:'b1', col3:' '},
+    {col1:'a2', col2:'b2', col3:' <-> '},
+    {col1:'A3', col2:'b3.3', col3:''}
 ];
 // constructor (tableElementId, canAddColumns=true, canAddRows=true, canEditColumnNames=true)
-const pbTable = new PbTable('table', false, false, false);
+const pbTable = new PbTable('table');
 pbTable.data = demoData;
 
 const jsonElement = document.getElementById('json');
