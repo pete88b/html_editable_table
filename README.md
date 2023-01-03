@@ -61,4 +61,4 @@ Note: API docs are available at [the docs page](http://127.0.0.1:8000/docs)
 
 # The python app
 
-I use nbdev for all of my python projects (this one uses [nbdev1](https://nbdev1.fast.ai/tutorial.html)) but ... because the python part is so simple, I'm wondering if we won't see much benefit from using nbdev?
+`app.py` creates the app by calling `create_app` from the `main` module.
