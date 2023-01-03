@@ -121,7 +121,7 @@ PbTable.prototype.newTd = function(columnName, value) {
     // we would like to just td.textContent = value; but ... we don't see spaces unless
     // we set innerHTML after replacing spaces with HTML entity
     if (value) {
-        td.innerHTML = value.replaceAll(' ', '&nbsp;');
+        td.innerHTML = (value.replaceAll) ? value.replaceAll(' ', '&nbsp;') : value;
     }
     td.onkeydown = this.onkeydownHandler;
     return td;
@@ -217,7 +217,7 @@ PbTable.prototype.getData = function() {
     });
     const tbody = Array.from(this.table.getElementsByTagName('tbody'))[0];
     Array.from(tbody.getElementsByTagName('tr')).forEach((tr, trIdx, trArray) => {
-        if (trIdx + 1 === trArray.length) {
+        if (this.canAddRows && trIdx + 1 === trArray.length) {
             return; // ignore the last row
         }
         if (tr.classList.contains('hidden')) {
@@ -226,7 +226,7 @@ PbTable.prototype.getData = function() {
         const row = {};
         data.push(row);
         Array.from(tr.getElementsByTagName('td')).forEach((td, tdIdx, tdArray) => {
-            if (tdIdx + 1 === tdArray.length) {
+            if (this.canAddColumns && tdIdx + 1 === tdArray.length) {
                 return; // ignore the last column
             }
             if (columnPositionToHidden[tdIdx]) {

@@ -1,5 +1,5 @@
 # HTML Editable Table
-> Show how we can make editable table with HTML, CSS and JavaScript.
+> Show how we can make editable tables with HTML, CSS and JavaScript.
 
 
 # Quick project overview
@@ -13,8 +13,8 @@ We also have a [FastAPI](https://fastapi.tiangolo.com/) app
 
 ## Live demos
 
-- [Fixed size table](https://bl.ocks.org/pete88b/a2044cf563b5e92f63ca800b108e7893)
-    - HTML editable table with export to JSON
+- [via github pages](https://pete88b.github.io/html_editable_table/)
+    - Everything except the API call demo works via github pages
 
 # Running locally
 

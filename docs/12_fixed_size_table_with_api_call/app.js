@@ -37,18 +37,18 @@ function displayOutputData(data) {
 
 function run() {
 	document.getElementById("loading-overlay").style.display = 'block';
-	xhr = new XMLHttpRequest();
-    xhr.open('POST', '/process-data/', true);
-    xhr.onreadystatechange = function () {
-        if (this.readyState === 4) {
-            // TODO: check HTTP status
-            response = JSON.parse(xhr.responseText);
-            displayOutputData(response);
-			document.getElementById("loading-overlay").style.display = 'none';
-        }
-    };
-	xhr.setRequestHeader("Content-Type", "application/json");
-	xhr.setRequestHeader('x-api-key', 'test'); // TODO: this is not a good way to pass an api key
-    xhr.send(JSON.stringify(extractTableData('table')));
+    fetch('/process-data/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': 'test' // TODO: this is not a good way to pass an api key
+        },
+        body: JSON.stringify(extractTableData('table'))
+    })
+    .then(response => response.json())
+    .then(data => {
+        displayOutputData(data);
+        document.getElementById('loading-overlay').style.display = 'none';
+    });
 }
 document.getElementById('run').onclick = run;
